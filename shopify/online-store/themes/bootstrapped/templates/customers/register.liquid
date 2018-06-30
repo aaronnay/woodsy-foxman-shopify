@@ -1,0 +1,16 @@
+<div id="customer-register" class="container">
+  <hr />
+  
+  <div class="row">
+    <div class="col-sm-7">
+      {% include 'customer_registration' %}
+    </div><!-- #register -->
+  </div><!-- .row -->
+</div><!-- #customer-register -->
+
+<script type="text/javascript">
+  jQuery(function() {
+    $("form#create_customer").validate({ errorClass: "text-danger" });
+    $("input#register_first_name").focus();
+  });
+</script>

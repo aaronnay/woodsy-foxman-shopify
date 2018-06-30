@@ -1,0 +1,202 @@
+<div id="cart" class="container">
+  <hr />
+  
+  <!-- Begin empty cart -->
+  {% if cart.item_count == 0 %}
+  <br />
+  <div class="well expanded-message">
+    <h3 class="alt-font-dark">
+      {{ 'cart.general.empty' | t }}
+      <a href="/" class="btn btn-black">
+        <span class="fa fa-angle-left"></span>
+        Continue Shopping
+      </a>
+    </h3>
+  </div>
+  <!-- End empty cart -->
+  
+  <!-- Begin cart -->
+  {% else %}
+  <form action="/cart" method="post" id="cartform">
+    <div class="row">
+      <div class="col-md-8">
+        <h3 class="alt-font-dark">Shopping Cart</h3><br />
+        
+        <div class="hidden-xs row h5">
+          <div class="col-sm-5">
+            Item
+          </div>
+          <div class="col-sm-7">
+            <div class="row">
+              <div class="col-sm-3">
+                Price
+              </div>
+              <div class="col-sm-3">
+                Qty
+              </div>
+              <div class="col-sm-6">
+                Subtotal
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr />
+        
+        {% for item in cart.items %}
+        <div class="row">
+          <div class="col-sm-5">
+            <div class="row">
+              <div class="col-xs-4">
+                <a href="{{ item.url }}" class="thumbnail margin-bottom-zero">
+                  <img src="{{ item | img_url: 'medium' }}" alt="{{ item.title | escape }}" class="img-responsive" />
+                </a>
+              </div>
+              <div class="col-xs-8">
+                <a href="{{ item.url }}">
+                  <h4 class="alt-font-light">{{ item.product.title }}</h4>
+                  <p class="color-gray">
+                    {{ item.product.type }}
+                    
+                    {% if item.product.variants.size > 1 %}
+                    <br />
+                    <small>{{ item.variant.title }}</small>
+                    {% endif %}
+                  </p>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-7">
+            <div class="row">
+              <div class="col-xs-offset-4 col-sm-offset-0 col-sm-3">
+                <div class="form-group">
+                  <label class="control-label visible-xs-inline">Price</label>
+                  <p class="form-control-static">
+                  	{{ item.price | money }}
+                  </p>
+                </div>
+              </div>
+              <div class="col-xs-offset-4 col-sm-offset-0 col-sm-3">
+                <div class="form-group">
+                  <label for="updates_{{ item.id }}" class="control-label visible-xs-inline">Qty</label>
+                  <input type="text" name="updates[]" id="updates_{{ item.id }}" value="{{ item.quantity }}" onfocus="this.select();" class="tc item-quantity form-control" />
+                </div>
+              </div>
+              <div class="col-xs-offset-4 col-sm-offset-0 col-sm-3">
+                <div class="form-group">
+                  <label class="control-label visible-xs-inline">Subtotal</label>
+                  <p class="form-control-static">
+                  	{{ item.line_price | money }}
+                  </p>
+                </div>
+              </div>
+              <div class="col-xs-offset-4 col-sm-offset-0 col-sm-3">
+                <a href="/cart/change?line={{ forloop.index }}&quantity=0" class="cart btn btn-primary">
+                  <span class="fa fa-times"></span>
+                  <span class="visible-xs-inline">Delete</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr />
+        {% endfor %}
+        
+        <div class="row">
+          <div class="col-sm-push-6 col-sm-6 text-right">
+            <input type="submit" id="update-cart" class="btn btn-link Din-Medium" name="update" value="Update Quantity" />
+          </div>
+          <div class="col-sm-pull-6 col-sm-6">
+            <br class="visible-xs-block" />
+            <a href="/" class="btn btn-link">
+              <span class="fa fa-angle-left"></span>
+              Continue Shopping
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-offset-1 col-md-3">
+        <br class="visible-xs-block visible-sm-block" />
+        <h3 class="alt-font-dark">Order Totals</h3><br />
+        
+        <p>Subtotal = {{ cart.total_price | money }}</p>
+        <p>
+          Tax =
+          {% if tax_line.price %}
+          	{{ tax_line.price | money }}
+          {% else %}
+          	--
+          {% endif %}
+        </p>
+        <p>
+          Shipping =
+          {% if shipping_method.price %}
+          	{{ shipping_method.price | money }}
+          {% else %}
+          	--
+          {% endif %}
+        </p>
+        <hr />
+        <h5>Total = {{ cart.total_price | plus: tax_line.price | plus: shipping_method.price | money }}</h5>
+        
+        <br />
+        <div class="row">
+          <div class="col-xs-12 col-sm-4 col-md-12 text-center">
+          	<input type="submit" id="checkout" class="btn btn-black btn-lg btn-block" name="checkout" value="Checkout" />
+            
+            {% if additional_checkout_buttons %}        
+            <br />
+            <h5>Or</h5>
+            <br />
+            {{ content_for_additional_checkout_buttons }}
+            {% endif %}
+            
+            <br /><br /><br /><br /><br /><br />
+            <a href="https://www.shopify.com/?utm_source=secure&amp;utm_medium=shop" title="This online store is secured by Shopify" target="_blank"><img src="//cdn.shopify.com/s/images/badges/shopify-secure-badge-light-shadow.png" alt="Shopify secure badge" /></a>
+            {% comment %}
+            <div class="row">
+              <div class="col-sm-6">
+              	<a href="https://www.shopify.com/?utm_source=secure&amp;utm_medium=shop" title="This online store is secured by Shopify" target="_blank"><img src="//cdn.shopify.com/s/images/badges/shopify-secure-badge-light-shadow.png" alt="Shopify secure badge" /></a>
+              </div>
+              <div class="col-sm-6">
+                <img src="{{ 'logo_digicert.png' | asset_url }}" alt="DigiCert SSL Certificate" title="This online store is secured by a DigiCert SSL Certificate" class="img-responsive img-thumbnail imgLogoDigiCert" />
+              </div>
+            </div>
+            {% endcomment %}
+          </div>
+        </div>
+      </div>
+    </div>
+    
+	{% comment %}
+    <div class="span6 inner-left inner-right">
+      <div class="checkout-buttons clearfix">
+        <label for="note">{{ 'cart.general.note' | t }}</label>
+        <textarea id="note" name="note" rows="10" cols="50">{{ cart.note }}</textarea>
+      </div>
+    </div>
+
+    <div class="span6 cart-buttons inner-right inner-left">
+      <div class="buttons clearfix">
+        <input type="submit" id="checkout" class="btn" name="checkout" value="{{ 'cart.general.checkout' | t }}" />
+        <input type="submit" id="update-cart" class="btn" name="update" value="{{ 'cart.general.update' | t }}" />
+      </div>
+    </div>
+
+    {% if additional_checkout_buttons %}        
+    <div class="row">
+      <div class="extra-checkout-buttons span6 inner-right">
+        {{ content_for_additional_checkout_buttons }}
+      </div>
+    </div>
+    {% endif %}
+    {% endcomment %}
+
+  </form>
+  {% endif %}
+  
+  
+  <!-- End cart -->
+  
+</div> 
+

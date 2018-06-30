@@ -1,0 +1,52 @@
+<div id="customer-activate" class="container">
+  <hr />
+  
+  <div class="row">
+    <div class="col-sm-7">
+      <h3 class="alt-font-dark margin-top-zero">{{ 'customer.activate_account.title' | t }}</h3>
+      <p>{{ 'customer.activate_account.subtext' | t }}</p>
+      
+      <div id="activateFormWrapper">
+        {% form 'activate_customer_password' %}
+          {% if form.errors %}
+          <div class="errorForm feedback alert alert-danger">
+            {% for field in form.errors %}
+            <p>
+              {% if field == 'form' %}
+              {{ form.errors.messages[field] }}
+              {% else %}
+              {{ form.errors.translated_fields[field] }} - {{ form.errors.messages[field] }}
+              {% endif %}
+            </p>
+            {% endfor %}
+          </div>
+          {% endif %}
+
+          <div class="form-group">
+            <label for="register_password" class="sr-only">{{ 'customer.activate_account.password' | t }}*</label>
+            <input type="password" value="" class="form-control" id="register_password" name="customer[password]" placeholder="{{ 'customer.activate_account.password' | t }}*" required data-msg-required="Required!">
+          </div>
+
+          <div class="form-group">
+            <label for="register_password_confirm" class="sr-only">Re-Enter Password*</label>
+            <input type="password" value="" class="form-control" id="register_password_confirm" name="customer[password_confirmation]" placeholder="Re-Enter Password*" required data-msg-required="Required!" equalto="#register_password" data-msg-equalto="Invalid! Must match {{ 'customer.register.password' | t }}">
+          </div>
+
+          <div class="form-group action_bottom">
+            <input type="submit" class="btn btn-black btn-block" value="{{ 'customer.activate_account.submit' | t }}" />
+
+            <br />
+            <a href="/" class="Din-Medium">{{ 'customer.activate_account.cancel' | t }}</a>
+          </div>
+        {% endform %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  jQuery(function() {
+    $("form", "div#activateFormWrapper").validate({ errorClass: "text-danger" });
+    $("input#register_password").focus();
+  });
+</script>

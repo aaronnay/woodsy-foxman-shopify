@@ -1,0 +1,19 @@
+{% if shop.customer_accounts_enabled %}
+  {% if customer %}
+    <li role="presentation">
+      <a href="/account">
+        {% comment %}
+        {{ 'layout.customer.your_account' | t }}
+        {% endcomment %}
+        My Account
+      </a>
+	</li>
+  {% else %}
+    <li role="presentation">
+      {% comment %}
+      {{ 'layout.customer.login' | t | customer_login_link }}
+      {% endcomment %}
+      {{ 'My Account' | customer_login_link }}
+    </li>
+  {% endif %}
+{% endif %}

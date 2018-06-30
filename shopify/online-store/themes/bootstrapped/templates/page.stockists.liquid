@@ -1,0 +1,134 @@
+<div id="page">
+    <br />
+
+    <div class="details">
+        <img src="//cdn.shopify.com/s/files/1/0893/2286/files/Hero-Stockists.png" alt="Stockists & Wholesale" class="img-responsive center-block" />
+        <br /><br />
+
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-5 col-md-4">
+                    <h5>Wholesale Account</h5>
+                    <h3 class="alt-font-dark">Hello Stockists</h3>
+                    {{ page.content }}
+                  	<br />                  	
+                  	<a href="{{ 'Woodsy-Foxman-Catalog.pdf' | file_url }}" class="btn btn-black btn-block" target="_blank">View Our Wholesale Catalog</a>
+
+                    <hr />
+
+                    <!-- Begin newsletter -->
+                    {% assign wholesaleMailingListFormActionUrl = '//woodsyfoxman.us9.list-manage.com/subscribe/post?u=98263c4ad2c581a9142fee006&amp;id=f2dea1a64a' %}
+                    <form action="{{ wholesaleMailingListFormActionUrl }}" method="post" id="mc-embedded-subscribe-form-wholesale" name="mc-embedded-subscribe-form" target="_blank">
+                        <h5>
+                            Let's Cross Paths
+                            {% comment %}
+                            {{ 'layout.footer.newsletter_title' | t }}
+                            {% endcomment %}
+                        </h5>
+                        <div class="form-group">
+                            <label for="wholesale-newsletter-mail">Sign up for our wholesale-specific newsletter</label>
+                            <div class="input-group">
+                                <input type="email" class="form-control" id="wholesale-newsletter-mail" name="EMAIL" placeholder="Your email" required data-msg-required="Required!" email="true" data-msg-email="Invalid! ex: person@domain.com">
+                                <span class="input-group-btn">
+                                    <input type="submit" class="btn btn-default color-gold newsletter" value="Embark" name="subscribe" id="subscribe" />
+                                </span>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- End newsletter -->
+
+                    <div class="visible-xs">
+                        <br /><br />
+                    </div>
+                </div>
+                <div class="col-sm-7 col-md-offset-1 col-md-7">
+                    <!-- Begin wholesale request -->
+                    {% form 'contact' %}
+                    <h5>Request a Wholesale Account</h5>
+                  	{% comment %}
+                    <p>
+                        Please fill out the form below. Once it is approved, we'll email you your password giving you access to wholesale pricing. Please make sure to check your spam folder.
+                    </p>
+                  	{% endcomment %}
+
+                    {% if form.posted_successfully? %}
+                    <div class="successForm feedback alert alert-success">
+                        <p>Thanks for requesting a wholesale account. We'll get back to you as soon as possible.</p>
+                    </div>
+                    {% endif %}
+
+                    {% if form.errors %}
+                    <div class="errorForm feedback alert alert-danger">
+                        <p>{{ 'contact.form.post_error' | t }}</p>
+                        {% for field in form.errors %}
+                        <p>{{ 'contact.form.post_field_error_html' | t: field: field, error: form.errors.messages[field] }}</p>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    <div id="contactFormWrapper">
+                        <div class="form-group">
+                            <label for="co" class="sr-only">Company Name*</label>
+                            <input type="text" class="form-control" id="co" name="contact[company name]" placeholder="Company Name*" required data-msg-required="Required!">
+                        </div>
+                        <div class="form-group">
+                            <label for="assoc" class="sr-only">Associate Name*</label>
+                            <input type="text" class="form-control" id="assoc" name="contact[associate name]" placeholder="Associate Name*" required data-msg-required="Required!">
+                        </div>
+                        <div class="form-group">
+                            <label for="mail" class="sr-only">Email*</label>
+                            <input type="email" class="form-control" id="mail" name="contact[email]" placeholder="Email*" required data-msg-required="Required!" email="true" data-msg-email="Invalid! ex: person@domain.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="phone" class="sr-only">Telephone</label>
+                            <input type="tel" class="form-control phone-mask" id="phone" name="contact[phone]" placeholder="Telephone" phoneus="true" data-msg-phoneus="Invalid! ex: ### - ### - ####">
+                        </div>
+                        <div class="form-group">
+                            <label for="website" class="sr-only">Website</label>
+                            <input type="url" class="form-control" id="website" name="contact[website]" placeholder="Website" url="true" data-msg-url="Invalid! ex: http://www.domain.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="resale-no" class="sr-only">Resale No.</label>
+                            <input type="text" class="form-control" id="resale-no" name="contact[resale number]" placeholder="Resale No.">
+                        </div>
+                        <div class="form-group">
+                            <label for="mail-addr" class="sr-only">Mailing Address*</label>
+                            <input type="text" class="form-control" id="mail-addr" name="contact[mailing address]" placeholder="Mailing Address*" required data-msg-required="Required!">
+                        </div>
+                        <div class="form-group">
+                            <label for="msg" class="sr-only">Message for Us*</label>
+                            <textarea class="form-control" rows="3" id="msg" name="contact[body]" placeholder="Message for Us*" required data-msg-required="Required!"></textarea>
+                        </div>
+                        <div class="checkbox">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <label>
+                                        <input type="checkbox" id="stockist-newsletter" name="contact[subscribe me to wholesale newsletter]" value="Yes">
+                                        Sign up for our Wholesale Newsletter and receive a welcome package just for you!
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-black btn-block newsletter" value="Submit for Account" id="contactFormSubmit" />
+                        </div>
+                    </div>
+                    {% endform %}
+                    <!-- End wholesale request -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+  jQuery(function() {
+    $("form#mc-embedded-subscribe-form-wholesale").validate({
+      errorClass: "text-danger",
+      errorPlacement: function(error, element) {
+        error.appendTo(element.closest("div.form-group"));
+      }
+    });
+    $("form.contact-form").validate({ errorClass: "text-danger" });
+  });
+</script>

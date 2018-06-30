@@ -1,0 +1,131 @@
+<div id="page">
+  <br />
+  
+  <div class="details">
+    <img src="//cdn.shopify.com/s/files/1/0893/2286/files/Hero-Contact.png" alt="{{ page.title }}" class="img-responsive center-block" />
+    <br /><br />
+  	
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-5 col-md-4">
+          <h5>Connect with Us</h5>
+          <h3 class="alt-font-dark">Drop Us a Line</h3>
+          <br />
+          
+          {% comment %}
+          <h5>Snail Mail</h5>
+          <p>
+            27 West 39th Avenue<br />
+            Spokane, WA 99203
+          </p>
+          <br />
+          {% endcomment %}
+          
+          <h5>General Inquiries &amp; Customer Service</h5>
+          <p>
+            <a href="mailto:info@woodsyfoxman.com">info@woodsyfoxman.com</a>
+          </p>
+          <br />
+          
+          <h5>Telephone</h5>
+          <p>
+            (206) 251-4448
+          </p>
+          
+          <hr />
+          
+          <h5>Wholesale</h5>
+          <p>
+            <a href="mailto:wholesale@woodsyfoxman.com">wholesale@woodsyfoxman.com</a>
+          </p>
+          <br />
+          
+          <h5>Press</h5>
+          <p>
+            <a href="mailto:press@woodsyfoxman.com">press@woodsyfoxman.com</a>
+          </p>
+          
+          <hr />
+          
+          <h5>Follow Us</h5>
+          <ul class="list-inline">
+            <li>
+              {% if settings.instagram_link != blank %}
+              <a href="{{ settings.instagram_link }}" title="{{ 'layout.footer.social' | t: shop: shop.name, social_media: 'Instagram' }}" class="instagram" target="_blank">
+                <img src="{{ 'social-icon-instagram.png' | asset_url }}" alt="Instagram" class="img-responsive imgSocialIcon" />
+              </a>
+              {% endif %}
+            </li>
+            <li>
+              {% if settings.pinterest_link != blank %}
+              <a href="{{ settings.pinterest_link }}" title="{{ 'layout.footer.social' | t: shop: shop.name, social_media: 'Pinterest' }}" class="pinterest" target="_blank">
+                <img src="{{ 'social-icon-pinterest.png' | asset_url }}" alt="Pinterest" class="img-responsive imgSocialIcon" />
+              </a>
+              {% endif %}
+            </li>
+            <li>
+              {% if settings.facebook_link != blank %}
+              <a href="{{ settings.facebook_link }}" title="{{ 'layout.footer.social' | t: shop: shop.name, social_media: 'Facebook' }}" class="facebook" target="_blank">
+                <img src="{{ 'social-icon-facebook.png' | asset_url }}" alt="Facebook" class="img-responsive imgSocialIcon" />
+              </a>
+              {% endif %}
+            </li>
+          </ul>
+          
+          <div class="visible-xs">
+            <br /><br />
+          </div>
+        </div>
+        <div class="col-sm-7 col-md-offset-1 col-md-7">
+          <!-- Begin contact us form -->
+          {% form 'contact' %}
+            <h5>Send Us a Quick Note</h5>
+            <p>
+              {{ page.content }}
+            </p>
+          	
+          	{% if form.posted_successfully? %}
+            <div class="successForm feedback alert alert-success">
+              <p>{{ 'contact.form.post_success' | t }}</p>
+            </div>
+            {% endif %}
+          
+            {% if form.errors %}
+            <div class="errorForm feedback alert alert-danger">
+              <p>{{ 'contact.form.post_error' | t }}</p>
+              {% for field in form.errors %}
+                <p>{{ 'contact.form.post_field_error_html' | t: field: field, error: form.errors.messages[field] }}</p>
+              {% endfor %}
+            </div>
+            {% endif %}
+          
+           	<div id="contactFormWrapper">
+              <div class="form-group">
+                <label for="contactFormName" class="sr-only">Name*</label>
+                <input type="text" class="form-control" id="contactFormName" name="contact[name]" placeholder="Name*" required data-msg-required="Required!">
+              </div>
+              <div class="form-group">
+                <label for="contactFormEmail" class="sr-only">Email*</label>
+                <input type="email" class="form-control" id="contactFormEmail" name="contact[email]" placeholder="Email*" required data-msg-required="Required!" email="true" data-msg-email="Invalid! ex: person@domain.com">
+              </div>
+              <div class="form-group">
+                <label for="contactFormMessage" class="sr-only">Message for Us*</label>
+                <textarea class="form-control" rows="3" id="contactFormMessage" name="contact[body]" placeholder="Message for Us*" required data-msg-required="Required!"></textarea>
+              </div>
+              <div class="form-group">
+                <input type="submit" class="btn btn-black btn-block newsletter" value="Send Message" id="contactFormSubmit" />
+              </div>
+          	</div>
+          {% endform %}
+          <!-- End contact us form -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  jQuery(function() {
+    $("form.contact-form").validate({ errorClass: "text-danger" });
+  });
+</script>

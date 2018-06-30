@@ -1,0 +1,32 @@
+{% if paginate.pages > 1 %}
+  <nav>
+    <ul class="pagination">
+      {% if paginate.previous %}
+      <li><a href="{{ paginate.previous.url }}" aria-label="Previous">{{ 'general.pagination.previous' | t }}</a></li>
+      {% endif %}
+      {% if paginate.next %}
+      <li><a href="{{ paginate.next.url }}" aria-label="Next">{{ 'general.pagination.next' | t }}</a></li>
+      {% endif %}
+    </ul>
+  </nav>
+	
+  <h5 class="color-gray">{{ 'general.pagination.summary' | t: current_page: paginate.current_page, pages: paginate.pages }}</h5>
+
+  {% comment %}
+  <div>
+    <ul class="pagination">
+      {% if paginate.previous %}
+      <li><a href="{{ paginate.previous.url }}" class="prev">{{ 'general.pagination.previous' | t }}</a></li>
+      {% else %}
+      <li><span>{{ back_word }}</span></li>
+      {% endif %}
+      <li>{{ 'general.pagination.summary' | t: current_page: paginate.current_page, pages: paginate.pages }}</li>
+      {% if paginate.next %}
+      <li><a href="{{ paginate.next.url }}" class="next">{{ 'general.pagination.next' | t }}</a></li>
+      {% else %}
+      <li><span>{{ next_word }}</span></li>
+      {% endif %}
+    </ul>
+  </div>
+  {% endcomment %}
+{% endif %}

@@ -1,0 +1,21 @@
+<div id="page" class="container">
+  <hr />
+  
+  <div class="text-center">
+    <ul class="list-inline subMenu">
+      <li class="{% if page.handle == pages['policies'].handle %} active{% endif %}">
+        <a href="{{ pages['policies'].url }}" title="{{ pages['policies'].title }}">{{ pages['policies'].title }}</a>
+      </li>
+      <li class="nav-divider-pipe">/</li>
+      <li class="{% if page.handle == pages['faqs'].handle %} active{% endif %}">
+        <a href="{{ pages['faqs'].url }}" title="{{ pages['faqs'].title }}">{{ pages['faqs'].title }}</a>
+      </li>
+    </ul>
+  </div>
+  
+  <hr />  
+  
+  <div class="details">
+    {{ page.content }}
+  </div>
+</div>

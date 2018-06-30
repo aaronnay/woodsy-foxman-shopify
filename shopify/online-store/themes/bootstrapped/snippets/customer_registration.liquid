@@ -1,0 +1,75 @@
+<div id="register">
+  <h5>Welcome First-Time Customer</h5>
+  <h3 class="alt-font-dark margin-top-zero">
+    Create an Account
+    {% comment %}
+    {{ 'customer.register.title' | t }}
+    {% endcomment %}
+  </h3>
+
+  {% form 'create_customer' %}
+  {% if form.posted_successfully? %}
+  <div class="successForm feedback alert alert-success">
+    {% for field in form.errors %}
+    <p>
+      {% if field == 'form' %}
+      {{ form.errors.messages[field] }}
+      {% else %}
+      {{ form.errors.translated_fields[field] }} - {{ form.errors.messages[field] }}
+      {% endif %}
+    </p>
+    {% endfor %}
+  </div>
+  {% else %}
+  {% if form.errors %}
+  <div class="errorForm feedback alert alert-danger">
+    {% for field in form.errors %}
+    <p>
+      {% if field == 'form' %}
+      {{ form.errors.messages[field] }}
+      {% else %}
+      {{ form.errors.translated_fields[field] }} - {{ form.errors.messages[field] }}
+      {% endif %}
+    </p>
+    {% endfor %}
+  </div>
+  {% endif %}
+  {% endif %}
+
+  <div class="form-group">
+    <label for="register_first_name" class="sr-only">{{ 'customer.register.first_name' | t }}*</label>
+    <input type="text" value="" class="form-control" id="register_first_name" name="customer[first_name]" placeholder="{{ 'customer.register.first_name' | t }}*" required data-msg-required="Required!">
+  </div>
+
+  <div class="form-group">
+    <label for="register_last_name" class="sr-only">{{ 'customer.register.last_name' | t }}*</label>
+    <input type="text" value="" class="form-control" id="register_last_name" name="customer[last_name]" placeholder="{{ 'customer.register.last_name' | t }}*" required data-msg-required="Required!">
+  </div>
+
+  <div class="form-group">
+    <label for="register_email" class="sr-only">{{ 'customer.register.email' | t }}*</label>
+    <input type="email" value="" class="form-control" id="register_email" name="customer[email]" placeholder="{{ 'customer.register.email' | t }}*" required data-msg-required="Required!" email="true" data-msg-email="Invalid! ex: person@domain.com">
+  </div>
+
+  <div class="form-group">
+    <label for="register_password" class="sr-only">{{ 'customer.register.password' | t }}*</label>
+    <input type="password" value="" class="form-control" id="register_password" name="customer[password]" placeholder="{{ 'customer.register.password' | t }}*" required data-msg-required="Required!">
+  </div>
+
+  {% comment %}
+  <div class="form-group">
+    <label for="register_password_confirm" class="sr-only">Re-Enter Password*</label>
+    <input type="password" value="" class="form-control" id="register_password_confirm" name="customer[password_confirmation]" placeholder="Re-Enter Password*" required data-msg-required="Required!" equalto="#register_password" data-msg-equalto="Invalid! Must match {{ 'customer.register.password' | t }}">
+  </div>
+  {% endcomment %}
+
+  <div class="form-group action_bottom">
+    <input type="submit" class="btn btn-black btn-block" value="Register" />
+
+    {% comment %}
+    <br />
+    <a href="/" class="Din-Medium">{{ 'customer.register.cancel' | t }}</a>
+    {% endcomment %}
+  </div>
+  {% endform %}
+</div>

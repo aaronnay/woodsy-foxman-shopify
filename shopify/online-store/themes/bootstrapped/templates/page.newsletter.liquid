@@ -1,0 +1,20 @@
+<div id="page" class="container">
+  <hr />
+  
+  <h3 class="alt-font-dark">{{ page.title }}</h3>
+  <p>
+    {{ page.content }}
+  </p>
+  <br />
+  
+  <!-- Begin newsletter -->
+  {% include 'newsletter_signup' %}
+  <!-- End newsletter -->
+</div>
+
+<script>
+  jQuery(document).ready(function($){
+    jQuery("hr#hrLayoutNewsletterSignup").addClass("hidden-xs hidden-sm");
+    jQuery("div#divLayoutNewsletterSignup").fadeOut();
+  });
+</script>
